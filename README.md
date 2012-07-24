@@ -1,6 +1,6 @@
 NBody
 =====
 
-A simple solar system built using OpenGL. An ongoing experiment.
+A simple solar system built using OpenGL.
 
-In XCode 4.3.3 requires the inclusion of OpenGL.framework and GLUT.framework.
+Built using Visual Studio 2010.
