@@ -3,4 +3,4 @@ NBody
 
 A simple solar system built using OpenGL.
 
-Built using Visual Studio 2010.
+Developed on Visual Studio 2010. Use other platforms at your own risk. (The corona library is a nightmare on OSX.)
