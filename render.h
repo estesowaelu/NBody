@@ -4,8 +4,9 @@
 #include <stdlib.h>
 #include <math.h>
 #include <iostream>
-#include "OpenGL/gl.h"
-#include "GLUT/glut.h"
+#include "glut.h"
+
+#include "loadTexture.h"
 
 class Render
 {
@@ -26,7 +27,11 @@ public:
 	
 private:
 	// These functions are private and cannot be called anywhere outside of render class
+	void drawTexturedSphere(void);
+	void drawTexturedCube(void);
+	void drawTexturedSphericalDome(void);
 	void drawTextureBox(void);
+
 	void clamp(float v0, float v1, float v2);
 
 	// Variables used in the member functions of render class
@@ -37,6 +42,10 @@ private:
 	int mButton;
 	int mOldX, mOldY;
 	
+	LoadTexture loadtexture;
+	int tex0, tex1, tex2, tex3, tex4, tex5;
+
+
 	GLUquadricObj *qobj;
 	void drawPlanetarySystem(void);
 	void drawSun(void);

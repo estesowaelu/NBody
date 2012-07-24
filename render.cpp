@@ -196,8 +196,6 @@ void Render::init(void) {
 
 	glShadeModel (GL_SMOOTH);
 
-	glEnable(GL_LIGHTING);
-
     // setup ambient light
 	GLfloat ambientColor[] = {0.2f, 0.2f, 0.2f, 1.0f};
 	glLightModelfv (GL_LIGHT_MODEL_AMBIENT, ambientColor);
@@ -207,7 +205,19 @@ void Render::init(void) {
     GLfloat lightPos0[] = {0.0f, 0.0f, 0.0f, 1.0f}; //Positioned (0, 0, 0). Last param indicates fixed positional light
     glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
+
+	glEnable(GL_LIGHTING);
+
+	glEnable (GL_COLOR_MATERIAL);
+	glColorMaterial (GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 	
+	tex0 = loadtexture.load("PlanetTextures/sunmap.jpg");
+	tex1 = loadtexture.load("PlanetTextures/mercurymap.jpg");
+	tex2 = loadtexture.load("PlanetTextures/venusmap.jpg");
+	tex3 = loadtexture.load("PlanetTextures/earthmap.jpg");
+	tex4 = loadtexture.load("PlanetTextures/moonmap1k.jpg");
+	tex5 = loadtexture.load("PlanetTextures/marsmap1k.jpg");
+
 	qobj = gluNewQuadric();
 	gluQuadricDrawStyle(qobj, GLU_FILL);
 	gluQuadricTexture(qobj, GL_TRUE);
@@ -323,17 +333,15 @@ void Render::drawPlanetarySystem(void) {
 	drawEarth();
 	drawMoon();
 	drawMars();
-//	drawJupiter();
-//	drawSaturn();
-//	drawUranus();
-//	drawNeptune();
 }
 
 void Render::drawSun(void) {
 	glEnable(GL_LIGHT0);
+	glEnable(GL_TEXTURE_2D);
     
 	glColor3f(1.0, 1.0, 0.0);
 	gluQuadricOrientation(qobj, GLU_OUTSIDE);
+	glBindTexture(GL_TEXTURE_2D, tex0);
 	glPolygonMode(GL_BACK, GL_FILL);
     
 	glPushMatrix();
@@ -347,6 +355,7 @@ void Render::drawSun(void) {
     
     std::cout << "SOL\t\t| rotation: " << sunrot << "\n";
     
+	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHT0);
 }
 
@@ -356,9 +365,11 @@ void Render::drawMercury(void) {
     GLfloat lightPos1[] = {1.0f, 0.0f, 0.0f, 1.0f}; //Last parameter '0.0' indicates directional light
 
 	glEnable(GL_LIGHT1);
+	glEnable(GL_TEXTURE_2D);
     
-	glColor3f(0.2, 0.5, 0.7);
+	glColor3f(1.0, 1.0, 0.0);
 	gluQuadricOrientation(qobj, GLU_OUTSIDE);
+	glBindTexture(GL_TEXTURE_2D, tex1);
 	glPolygonMode(GL_BACK, GL_FILL);
     
 	glPushMatrix();
@@ -377,6 +388,7 @@ void Render::drawMercury(void) {
     
     std::cout << "MERCURY\t| rotation: " << mercrot << "\t\t orbit: " << mercorbit << "\n";
 
+	glDisable(GL_TEXTURE_2D);
     glDisable(GL_LIGHT1);
 }
 
@@ -388,9 +400,11 @@ void Render::drawVenus(void) {
     GLfloat lightPos1[] = {1.0f, 0.0f, 0.0f, 1.0f}; //Last parameter '0.0' indicates directional light
     
 	glEnable(GL_LIGHT1);
+	glEnable(GL_TEXTURE_2D);
     
-	glColor3f(0.0, 0.8, 0.8);
+	glColor3f(1.0, 1.0, 0.0);
 	gluQuadricOrientation(qobj, GLU_OUTSIDE);
+	glBindTexture(GL_TEXTURE_2D, tex2);
 	glPolygonMode(GL_BACK, GL_FILL);
     
 	glPushMatrix();
@@ -409,6 +423,7 @@ void Render::drawVenus(void) {
 
     std::cout << "VENUS\t| rotation: " << venrot << "\t\t orbit: " << venorbit << "\n";
 
+	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHT1);
 }
 
@@ -420,9 +435,11 @@ void Render::drawEarth(void) {
     GLfloat lightPos1[] = {1.0f, 0.0f, 0.0f, 1.0f}; //Last parameter '0.0' indicates directional light
     
 	glEnable(GL_LIGHT1);
+	glEnable(GL_TEXTURE_2D);
     
-	glColor3f(0.0, 0.6, 0.9);
+	glColor3f(1.0, 1.0, 0.0);
 	gluQuadricOrientation(qobj, GLU_OUTSIDE);
+	glBindTexture(GL_TEXTURE_2D, tex3);
 	glPolygonMode(GL_BACK, GL_FILL);
     
 	glPushMatrix();
@@ -435,12 +452,14 @@ void Render::drawEarth(void) {
 	glRotatef(earthorbit, 0, -1, 0);
 	glRotatef(66.6, 1, 0, 0);
 	glRotatef(23.9*earthrot, 0, 0, 1);
+	glRotatef(180, 0, 1, 0);
 	
 	gluSphere(qobj, 0.5*128, 15, 15);
     glPopMatrix();
 	
     std::cout << "EARTH\t| rotation: " << earthrot << "\t\t\t orbit: " << earthorbit << "\n";
 
+	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHT1);
 }
 
@@ -452,9 +471,11 @@ void Render::drawMoon(void) {
     GLfloat lightPos1[] = {1.0f, 0.0f, 0.0f, 1.0f}; //Last parameter '0.0' indicates directional light
     
 	glEnable(GL_LIGHT1);
+	glEnable(GL_TEXTURE_2D);
     
 	glColor3f(1.0, 1.0,	1.0);
 	gluQuadricOrientation(qobj, GLU_OUTSIDE);
+	glBindTexture(GL_TEXTURE_2D, tex4);
 	glPolygonMode(GL_BACK, GL_FILL);
 	
     glPushMatrix();
@@ -481,6 +502,7 @@ void Render::drawMoon(void) {
 
 	std::cout << "LUNA\t| rotation: " << moonrot << "\t\t orbit: " << moonorbit << "\n";
 
+	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHT1);
 
 }
@@ -493,9 +515,11 @@ void Render::drawMars(void) {
     GLfloat lightPos1[] = {1.0f, 0.0f, 0.0f, 1.0f}; //Last parameter '0.0' indicates directional light
     
 	glEnable(GL_LIGHT1);
+	glEnable(GL_TEXTURE_2D);
     
-	glColor3f(0.0, 0.6, 0.9);
+	glColor3f(1.0, 1.0, 0.0);
 	gluQuadricOrientation(qobj, GLU_OUTSIDE);
+	glBindTexture(GL_TEXTURE_2D, tex5);
 	glPolygonMode(GL_BACK, GL_FILL);
     
 	glPushMatrix();
@@ -514,6 +538,7 @@ void Render::drawMars(void) {
 	
     std::cout << "MARS\t| rotation: " << marsrot << "\t\t\t orbit: " << marsorbit << "\n";
 	
+	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHT1);
 }
 

@@ -1,6 +1,5 @@
 #include <iostream>
-#include "OpenGL/gl.h"
-#include "GLUT/glut.h"
+#include "glut.h"
 #include "render.h"
 
 // define width & height of openGL window
